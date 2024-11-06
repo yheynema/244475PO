@@ -1,0 +1,5 @@
+Le montage ici présent est utlisé pour une laboratoire en 4e session du programme.
+
+Il s'agit d'un capteur ultrasonique monté au bout d'une perche qui mesure la hauteur avec le plancher de la classe. Les données des mesures sont prises par 4 répétitions de 100 millisecondes chaque et transmises à chaque seconde vers le serveur de partage via le protocole MQTT (page avec le fond vert). La donnée est ensuite acheminée par la page web (244-475-AL - Labo 01 mesure ultrason) pour fin de présentation. La donnée est également écrite sur une carte mémoire de type SD, placée sur le montage.
+
+Les étudiants du programme seront ainsi initiés aux techniques de la capture, du traitement et du stockage de l'information d'un appareil de prise de mesure physique. Les sujets abordés sont: le stockage de données, le client web, le protocole TCP/IP de l'internet, les réseaux filaires et sans fils, les technologies infonuagiques. Le tout autour d'un système à microcontrôleur basé sur le ESP32 et Arduino.

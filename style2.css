@@ -1,0 +1,97 @@
+body {font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;}
+#Status {
+    float: left;
+    width: 30%; /* Largeur du tableau */
+}
+
+#TB {
+    float: right;
+    width: 65%; /* Largeur de l'iframe */
+	height: 550px; /* Vous pouvez définir une hauteur spécifique pour l'iframe */
+    margin-left: 10px;
+	display: flex; /* Active le centrage flexible */
+    justify-content: center; /* Centre l'iframe horizontalement */
+
+}
+
+iframe {
+    width: 95%;
+    height: 100%;
+}
+
+#details, #som12m, #som60j {
+    border-collapse: collapse;
+    width: 80%;
+}
+#som12m, #som60j, #openevse {
+    border-collapse: collapse;
+    width: 50%;
+}
+/*#details tbody td, #details thead th, #som12m tbody td, #som12m thead th,#som60j tbody td, #som60j thead th {*/
+tbody td, thead th, tfoot th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+/* #details tbody tr:nth-child(even), #som12m tbody tr:nth-child(even), #som60j tbody tr:nth-child(even){background-color: #f2f2f2;}*/
+tbody tr:nth-child(even) {background-color: #f2f2f2;}
+/* #details tbody tr:hover, #som12m tbody tr:hover, #som60j tbody tr:hover {background-color: #ddd;}*/
+tbody tr:hover {background-color: #ddd;}
+/* #details th, #som12m th, #som60j th {*/
+thead th, tfoot th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+h2 {
+    border-bottom: 2px solid #eee;
+    width: 40%;
+    text-align: left;
+}
+tfoot#logHD {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    /* animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}

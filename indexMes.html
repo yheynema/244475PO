@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>244-470-AL - Labo 01</title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style2.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+	<script>
+function onMessageArrived(message) {
+    if (message.destinationName == "244475AL/lab01yhpub") {
+		
+        const obj = JSON.parse(message.payloadString);
+        document.getElementById("mesure01").innerHTML = obj.distance.toFixed(0)+" mm";
+		document.getElementById("mesure02").innerHTML = (obj.delay/1000).toFixed(2)+" ms";
+		document.getElementById("mesure03").innerHTML = obj.temperature.toFixed(1)+" &deg;C";
+		document.getElementById("mesure04").innerHTML = obj.msgcount;
+		document.getElementById("mesure05").innerHTML = obj.nblogsd;
+		document.getElementById("mesure06").innerHTML = obj.uptime;
+		document.getElementById("mesure07").innerHTML = obj.timestamp;
+		document.getElementById("mesure08").innerHTML = obj.mqttmsg;
+		document.getElementById("mesure09").innerHTML = obj.ldrvalue.toFixed(1)+" %";
+		logDateHeure();
+    }
+}
+function onConnect() {
+    mqttConnectStatus=1;
+    log("MQTT connected!");
+    var subscribeOptions = {qos: 0}
+    client.subscribe("244475AL/lab01yhpub",subscribeOptions);
+}
+
+function log(message) {
+    document.getElementById('logger').insertAdjacentHTML('beforeend', '<div>' + message + '</div>');
+}
+function logDateHeure() {
+    //var options = {weekday: "narrow", day: "numeric", month: "long", hour:"numeric",minute:"numeric",second:"numeric"};
+    var d = new Date();
+    document.getElementById("dateheure").innerHTML = d.toLocaleString("fr-CA");
+}
+function onConnectLost(message) {
+    log("OnConnectionLost! errnum="+message.errorCode+"; errmsg="+message.errorMessage);
+}
+
+function MQTTinit() {
+    client.connect({
+		userName: "technophyscal",
+		password: "2EsjPbmBZ1dGe64K",
+        onSuccess: onConnect,
+		useSSL:true,
+        mqttVersion: 3
+    });
+    logDateHeure();
+}
+
+//var client = new Paho.MQTT.Client("192.168.122.253",Number(9001),"clientjs");
+//Note: le client Paho connecte via un accès wss (HTTP-SSL)
+var client = new Paho.MQTT.Client("technophyscal.cloud.shiftr.io",Number(443),'',"clientjs");
+client.onMessageArrived = onMessageArrived;
+client.onConnectionLost = onConnectLost;
+	</script>
+</head>
+<body>
+<h1>244-475-AL - Labo 01 mesure ultrason</h1>
+<hr/>
+<div id="Status">
+<h2>Données de mesure</h2>
+<table id="mesures">
+<thead><tr><th>Données</th><th>valeur</th></tr></thead>
+<tbody><tr><td>Distance</td><td id="mesure01"></td></tr>
+<tr><td>Délais (Aller+Retour)</td><td id="mesure02"></td></tr>
+<tr><td>Température</td><td id="mesure03"></td></tr>
+<tr><td>nb lectures capteur</td><td id="mesure04"></td></tr>
+<tr><td>nb entrées SD</td><td id="mesure05"></td></tr>
+<tr><td>uptime</td><td id="mesure06"></td></tr>
+<tr><td>timestamp</td><td id="mesure07"></td></tr>
+<tr><td>nb msg mqtt</td><td id="mesure08"></td></tr>
+<tr><td>% niveau lumière</td><td id="mesure09"></td></tr>
+</tbody>
+<tfoot id="logHD"><tr><td>MÀJ:<div id="dateheure"></div></td></tr>
+		<tr><td>LOG:<div id="logger"></div></td></tr></tfoot>
+</table>
+</div>
+<div id="TB"><iframe src="http://technophys-tb.claurendeau.qc.ca:8080/dashboard/2dbcac60-9c49-11ef-9a39-0d7ec344d962?publicId=e0192500-e06f-11ee-9eb4-5959badc8f43" name="iframe_a" title="GraphTB"></iframe></div>
+<div id="Descrition"><hr/><h2>Description</h2><p>Le montage ici présent est utlisé pour un laboratoire en 4e session du programme.
+
+<p>Il s'agit d'un capteur ultrasonique monté au bout d'une perche et qui mesure la hauteur avec le plancher de la classe. Les données des mesures sont prises par 4 répétitions de 100 millisecondes chaque et transmises à chaque seconde vers le serveur de partage via le protocole MQTT (page avec le fond vert). La donnée est ensuite acheminée par la page web (244-475-AL - Labo 01 mesure ultrason) pour fin de présentation. La donnée est également écrite sur une carte mémoire de type SD, placée sur le montage.
+
+<p>Les étudiants du programme seront ainsi initiés aux techniques de la capture, du traitement et du stockage de l'information d'un appareil de prise de mesure physique. Les sujets abordés sont: le stockage de données, le client web, le protocole TCP/IP de l'internet, les réseaux filaires et sans fils, les technologies infonuagiques. Le tout autour d'un système à microcontrôleur basé sur le ESP32 et Arduino.</div>
+
+<script>MQTTinit();</script>
+
+<hr/>
+<div id="debug"></div>
+</body></html>
